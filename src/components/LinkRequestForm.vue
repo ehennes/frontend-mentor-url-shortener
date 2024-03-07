@@ -24,7 +24,7 @@ const handleSubmit = (e) => {
     e.preventDefault();
 
     // run function to hit tiny url endpoint and return a shortened url 
-    getShortURL(`${url}?api_token=${process.env.VUE_APP_TINYURL_API_KEY}`, {url: userProvidedLink.value})
+    getShortURL(`${url}?api_token=${import.meta.env.VITE_TINYURL_API_KEY}`, {url: userProvidedLink.value})
         .then((data) => {
             urlList.value.unshift([userProvidedLink.value, data.data.tiny_url]);
 

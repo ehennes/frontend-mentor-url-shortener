@@ -43,6 +43,14 @@ const handleSubmit = (e) => {
             .catch((error) => {
                 console.log('Error: ', error);
             });
+
+            // remove any button styling when new list item is added 
+            const resultButtons = document.querySelectorAll('.result button');
+
+            resultButtons.forEach((button) => {
+                button.classList.remove('copied-text-button');
+                button.textContent = "Copy";
+            });
     } else {
         document.querySelector('input:required').style.border = '2px solid var(--red)';
         document.querySelector('.error-msg').style.display = 'block';
@@ -167,14 +175,6 @@ retrieveUrlsFromStorage();
                     }
                 }
             }
-
-            // input:required {
-            //     border: 2px solid var(--red);
-
-            //     &::placeholder {
-            //         color: var(--red);
-            //     }
-            // }
 
             .error-msg {
                 bottom: 0;

@@ -40,8 +40,7 @@ Users should be able to:
 
 ### Built with
 
-- Vue.js
-- Vite
+- Vue 3 with Vite
 - Tiny Url API
 - Semantic HTML5 markup
 - CSS custom properties

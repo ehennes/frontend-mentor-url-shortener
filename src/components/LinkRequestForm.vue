@@ -6,6 +6,8 @@ const userProvidedLink = ref('');
 
 const urlList = ref([]);
 
+const isValid = ref(false);
+
 const url = 'https://api.tinyurl.com/create';
 async function getShortURL(url = '', data = {}) {
     const response = await fetch(url, {
@@ -23,17 +25,28 @@ async function getShortURL(url = '', data = {}) {
 const handleSubmit = (e) => {
     e.preventDefault();
 
-    // run function to hit tiny url endpoint and return a shortened url 
-    getShortURL(`${url}?api_token=${import.meta.env.VITE_TINYURL_API_KEY}`, {url: userProvidedLink.value})
-        .then((data) => {
-            urlList.value.unshift([userProvidedLink.value, data.data.tiny_url]);
+    // check if user input is empty or an invalid url
+    checkValidation();
 
-            // save userProvidedLink and shortened url to localStorage
-            saveUrlsToStorage(urlList.value);
-        })
-        .catch((error) => {
-            console.log('Error: ', error);
-        });
+    if (isValid.value) {
+        document.querySelector('input:required').style.border = 'none';
+        document.querySelector('.error-msg').style.display = 'none';
+
+        // run function to hit tiny url endpoint and return a shortened url 
+        getShortURL(`${url}?api_token=${import.meta.env.VITE_TINYURL_API_KEY}`, { url: userProvidedLink.value })
+            .then((data) => {
+                urlList.value.unshift([userProvidedLink.value, data.data.tiny_url]);
+
+                // save userProvidedLink and shortened url to localStorage
+                saveUrlsToStorage(urlList.value);
+            })
+            .catch((error) => {
+                console.log('Error: ', error);
+            });
+    } else {
+        document.querySelector('input:required').style.border = '2px solid var(--red)';
+        document.querySelector('.error-msg').style.display = 'block';
+    }
 }
 
 const saveUrlsToStorage = (list) => {
@@ -48,6 +61,16 @@ const retrieveUrlsFromStorage = () => {
     for (let i = 0; i < localStorage.length; i++) {
         urlList.value.unshift(JSON.parse(localStorage.getItem(localStorage.key(i))));
     };
+}
+
+const checkValidation = () => {
+    const urlPattern = /^(https?|ftp):\/\/(([a-z\d]([a-z\d-]*[a-z\d])?\.)+[a-z]{2,}|localhost)(\/[-a-z\d%_.~+]*)*(\?[;&a-z\d%_.~+=-]*)?(#[-a-z\d_]*)?$/i;
+    
+    if (userProvidedLink.value.length && urlPattern.test(userProvidedLink.value)) {
+        isValid.value = true;
+    } else {
+        isValid.value = false;
+    }
 }
 
 const copyText = async (text, e) => {
@@ -75,6 +98,7 @@ retrieveUrlsFromStorage();
     <div class="form-container">
         <form id="link-form" method="post">
             <input name="full-url" v-model="userProvidedLink" type="url" placeholder="Shorten a link here..." required />
+            <label class="error-msg">Please add a valid link</label>
             <input type="submit" value="Shorten it!" @click="handleSubmit" />
         </form>
     </div>
@@ -116,6 +140,7 @@ retrieveUrlsFromStorage();
             gap: 25px;
             justify-content: center;
             padding: 50px;
+            position: relative;
 
             input {
                 border: none;
@@ -141,15 +166,25 @@ retrieveUrlsFromStorage();
                         background: var(--cyan-hover);
                     }
                 }
+            }
 
-                // &:required:invalid {
-                //     border: 2px solid var(--red);
-                //     color: var(--red);
+            // input:required {
+            //     border: 2px solid var(--red);
 
-                //     &:focus-visible {
-                //         outline: none;
-                //     }
-                // }
+            //     &::placeholder {
+            //         color: var(--red);
+            //     }
+            // }
+
+            .error-msg {
+                bottom: 0;
+                color: var(--red);
+                display: none;
+                font-size: 16px;
+                font-style: italic;
+                left: 50px;
+                position: absolute;
+                transform: translate3d(0, -50%, 0);
             }
         }   
     }
@@ -193,6 +228,12 @@ retrieveUrlsFromStorage();
             form {
                 flex-direction: column;
                 padding: 25px;
+
+                .error-msg {
+                    position: relative;
+                    text-align: center;
+                    transform: translate3d(0, 0, 0);
+                }
             }
         }
 

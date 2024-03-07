@@ -23,7 +23,7 @@
 
         &:before {
             background-color: var(--violet);
-            background-image: url('./../../public/images/bg-boost-desktop.svg');
+            background-image: url('./../../images/bg-boost-desktop.svg');
             background-position: 50% 50%;
             background-repeat: no-repeat;
             background-size: cover;

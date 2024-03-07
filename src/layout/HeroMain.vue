@@ -27,7 +27,7 @@
             padding-right: 25px;
 
             h1 {
-                line-height: 100%;
+                line-height: 1.2;
             }
         }
 

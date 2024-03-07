@@ -1,4 +1,5 @@
 <script setup>
+import { useMedia } from './composables/media-queries.js';
 import NavMain from './layout/NavMain.vue';
 import NavMobile from './layout/NavMobile.vue';
 import HeroMain from './layout/HeroMain.vue';
@@ -7,13 +8,16 @@ import LinkRequestForm from './components/LinkRequestForm.vue';
 import IconCard from './components/IconCard.vue';
 import BannerMain from './components/BannerMain.vue';
 import FooterMain from './layout/FooterMain.vue';
+
+
+const isSmall = useMedia("(max-width: 800px)");
 </script>
 
 <template>
   <header>
-    <a class="logo" href="/"><img src="./../public/images/logo.svg" alt="Shortly logo"></a>
-    <NavMain />
-    <NavMobile />
+    <a class="logo" href="/"><img src="./../images/logo.svg" alt="Shortly logo"></a>
+    <NavMobile v-if="isSmall" />
+    <NavMain v-else />
   </header>
 
   <main>
@@ -130,6 +134,9 @@ import FooterMain from './layout/FooterMain.vue';
 
   // 800px and below 
   @media only screen and (max-width: 800px) {
+    header {
+      justify-content: space-between;
+    }
     .card-container {
       flex-direction: column;
 

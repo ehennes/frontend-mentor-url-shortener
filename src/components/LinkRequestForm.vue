@@ -230,6 +230,7 @@ retrieveUrlsFromStorage();
                 padding: 25px;
 
                 .error-msg {
+                    left: 0;
                     position: relative;
                     text-align: center;
                     transform: translate3d(0, 0, 0);

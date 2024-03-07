@@ -10,7 +10,7 @@
             <ButtonMain>Get Started</ButtonMain>
         </div>
         <div class="section-image">
-            <img src="./../../images/illustration-working.svg" alt="Cartoon illustration of a person sitting and working at desk." />
+            <img src="/images/illustration-working.svg" alt="Cartoon illustration of a person sitting and working at desk." />
         </div>
     </section>
 </template>

@@ -7,7 +7,6 @@ const userProvidedLink = ref('');
 const urlList = ref([]);
 
 const url = 'https://api.tinyurl.com/create';
-const api_key = 'P3xvDG5vKvCdAiTFGrOTjDexn73esn2sR5XYAsPf7oRM1qSAxC8pRhwVhhvh';
 async function getShortURL(url = '', data = {}) {
     const response = await fetch(url, {
         method: 'POST',
@@ -25,7 +24,7 @@ const handleSubmit = (e) => {
     e.preventDefault();
 
     // run function to hit tiny url endpoint and return a shortened url 
-    getShortURL(`${url}?api_token=${api_key}`, {url: userProvidedLink.value})
+    getShortURL(`${url}?api_token=${process.env.VUE_APP_TINYURL_API_KEY}`, {url: userProvidedLink.value})
         .then((data) => {
             urlList.value.unshift([userProvidedLink.value, data.data.tiny_url]);
 
@@ -52,6 +51,13 @@ const retrieveUrlsFromStorage = () => {
 }
 
 const copyText = async (text, e) => {
+    const resultButtons = document.querySelectorAll('.result button');
+
+    resultButtons.forEach((button) => {
+        button.classList.remove('copied-text-button');
+        button.textContent = "Copy";
+    });
+
     try {
         await navigator.clipboard.writeText(text);
         e.target.textContent = "Copied!";
@@ -130,7 +136,20 @@ retrieveUrlsFromStorage();
                     font-size: 16px;
                     font-weight: 700;
                     transition: all ease 0.3s;
+
+                    &:hover {
+                        background: var(--cyan-hover);
+                    }
                 }
+
+                // &:required:invalid {
+                //     border: 2px solid var(--red);
+                //     color: var(--red);
+
+                //     &:focus-visible {
+                //         outline: none;
+                //     }
+                // }
             }
         }   
     }

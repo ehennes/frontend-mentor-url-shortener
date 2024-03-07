@@ -15,7 +15,7 @@ const isSmall = useMedia("(max-width: 800px)");
 
 <template>
   <header>
-    <a class="logo" href="/"><img src="./../images/logo.svg" alt="Shortly logo"></a>
+    <a class="logo" href="/"><img src="/images/logo.svg" alt="Shortly logo"></a>
     <NavMobile v-if="isSmall" />
     <NavMain v-else />
   </header>

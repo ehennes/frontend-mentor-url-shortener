@@ -4,7 +4,7 @@
 /* Colors  */
 :root {
   --cyan: hsl(180, 66%, 49%);
-  --cyan-hover: hsla(180, 66%, 49%, 0.5);
+  --cyan-hover: #9BE3E2;
   --violet: hsl(257, 27%, 26%);
   --red: hsl(0, 87%, 67%);
   --light-gray: #F0F1F6;

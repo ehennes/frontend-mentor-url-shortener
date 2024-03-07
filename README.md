@@ -14,8 +14,6 @@ This is a solution to the [Shortly URL shortening API Challenge challenge on Fro
   - [Continued development](#continued-development)
 - [Author](#author)
 
-**Note: Delete this note and update the table of contents based on what sections you keep.**
-
 ## Overview
 
 ### The challenge
@@ -31,7 +29,7 @@ Users should be able to:
 
 ### Screenshot
 
-![](./images/url-shortener-screenshot.png)
+![](./public/images/url-shortener-screenshot.png)
 
 ### Links
 
